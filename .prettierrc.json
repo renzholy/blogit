@@ -1,0 +1,13 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "jsxBracketSameLine": true,
+  "overrides": [
+    {
+      "files": ".babelrc",
+      "options": { "parser": "json" }
+    }
+  ]
+}
