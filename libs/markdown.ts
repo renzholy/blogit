@@ -13,9 +13,7 @@ import rehype2react from 'rehype-react'
 import type { H } from 'mdast-util-to-hast'
 import type { Node } from 'unist'
 
-import { position } from './plugins/position'
 import { emoji } from './plugins/emoji'
-import { LINE_LABEL } from './constants'
 import MonaCode from '../components/mona-code'
 import LocalImage from '../components/local-image'
 
@@ -41,7 +39,6 @@ export function process(value: string): ReactNode {
     .use(slug)
     .use(headings)
     .use(gfm)
-    .use(position)
     .use(emoji)
     .use(remark2rehype, { handlers: { html: handleHtml } })
     .use(sanitize, {
@@ -50,7 +47,6 @@ export function process(value: string): ReactNode {
       attributes: {
         ...defaultSchema.attributes,
         code: ['className'],
-        '*': [LINE_LABEL, ...(defaultSchema.attributes?.['*'] || [])],
       },
     } as any)
     .use(stringify)

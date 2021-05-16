@@ -475,7 +475,6 @@ export const preview = css`
   img {
     max-width: 100%;
     box-sizing: initial;
-    background-color: #fff;
   }
 
   img[align='right'] {

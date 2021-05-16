@@ -5,7 +5,6 @@ import unified from 'unified'
 import rehype from 'rehype-parse'
 
 import { useMonacoColor } from '../hooks/use-monaco'
-import { LINE_LABEL } from '../libs/constants'
 
 const map: { [key: string]: string } = {
   js: 'javascript',
@@ -16,7 +15,6 @@ export default function MonaCode(
   props: ComponentProps & {
     children?: [string]
     className?: string
-    [LINE_LABEL]?: number
   },
 ) {
   const language = props.className?.replace('language-', '')
@@ -46,12 +44,5 @@ export default function MonaCode(
     [value, colorize, language],
   )
 
-  return (
-    <code
-      {...{
-        [LINE_LABEL]: props[LINE_LABEL],
-      }}>
-      {code || value}
-    </code>
-  )
+  return <code>{code || value}</code>
 }

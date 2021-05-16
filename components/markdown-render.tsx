@@ -5,7 +5,10 @@ import { process } from '../libs/markdown'
 
 export default function MarkdownRender(props: { children?: string }) {
   const markdown = useMemo<ReactNode>(
-    () => (props.children ? process(props.children) : null),
+    () =>
+      props.children
+        ? process(Buffer.from(props.children, 'base64').toString())
+        : null,
     [props.children],
   )
 
