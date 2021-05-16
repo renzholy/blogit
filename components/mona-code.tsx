@@ -9,6 +9,7 @@ import { useMonacoColor } from '../hooks/use-monaco'
 const map: { [key: string]: string } = {
   js: 'javascript',
   ts: 'typescript',
+  bash: 'shell',
 }
 
 export default function MonaCode(
