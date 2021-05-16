@@ -1,3 +1,4 @@
+import { createElement, Fragment, ReactNode } from 'react'
 import unified from 'unified'
 import parse from 'remark-parse'
 import slug from 'remark-slug'
@@ -8,12 +9,15 @@ import rehype from 'rehype-parse'
 import remark2rehype from 'remark-rehype'
 import stringify from 'rehype-stringify'
 import sanitize from 'rehype-sanitize'
+import rehype2react from 'rehype-react'
 import type { H } from 'mdast-util-to-hast'
 import type { Node } from 'unist'
 
 import { position } from './plugins/position'
 import { emoji } from './plugins/emoji'
 import { LINE_LABEL } from './constants'
+import MonaCode from '../components/mona-code'
+import LocalImage from '../components/local-image'
 
 function handleHtml(_h: H, node: Node) {
   return (
@@ -31,8 +35,8 @@ function handleHtml(_h: H, node: Node) {
   }))
 }
 
-export function process(value: string): string {
-  const { contents } = unified()
+export function process(value: string): ReactNode {
+  const { result } = unified()
     .use(parse)
     .use(slug)
     .use(headings)
@@ -50,6 +54,14 @@ export function process(value: string): string {
       },
     } as any)
     .use(stringify)
+    .use(rehype2react, {
+      createElement,
+      Fragment,
+      components: {
+        code: MonaCode,
+        img: LocalImage,
+      },
+    })
     .processSync(value)
-  return contents as string
+  return result as ReactNode
 }

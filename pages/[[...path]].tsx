@@ -3,7 +3,9 @@ import { Octokit } from 'octokit'
 
 import MarkdownRender from '../components/markdown-render'
 
-const octokit = new Octokit()
+const octokit = new Octokit({
+  auth: process.env.PAT,
+})
 
 type Props = {
   data?: string
