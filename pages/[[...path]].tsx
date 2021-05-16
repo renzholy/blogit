@@ -12,7 +12,7 @@ type Props = {
 }
 
 type Params = {
-  path: string[]
+  path?: string[]
 }
 
 export default function Path(props: Props) {
@@ -38,13 +38,16 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
     recursive: 'true',
   })
   return {
-    paths: tree.data.tree
-      .filter(
-        (node) => node.path?.endsWith('.md') || node.path?.endsWith('.MD'),
-      )
-      .map((node) => ({
-        params: { path: node.path!.split('/') },
-      })),
+    paths: [
+      { params: { path: [] } }, // index page
+      ...tree.data.tree
+        .filter(
+          (node) => node.path?.endsWith('.md') || node.path?.endsWith('.MD'),
+        )
+        .map((node) => ({
+          params: { path: node.path!.split('/') },
+        })),
+    ],
     fallback: false,
   }
 }
@@ -66,7 +69,10 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   const content = await octokit.rest.repos.getContent({
     owner: process.env.NEXT_PUBLIC_OWNER,
     repo: process.env.NEXT_PUBLIC_REPO,
-    path: context.params.path.join('/'),
+    path:
+      context.params.path?.join('/') ||
+      process.env.NEXT_PUBLIC_INDEX ||
+      'README.md',
   })
   return {
     props: {
