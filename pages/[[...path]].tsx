@@ -31,7 +31,7 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
     paths: tree.data.tree.map((node) => ({
       params: { path: node.path!.split('./') },
     })),
-    fallback: true,
+    fallback: false,
   }
 }
 
