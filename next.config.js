@@ -1,3 +1,8 @@
+const withTM = require('next-transpile-modules')([
+  'hast-util-sanitize',
+  'unist-util-visit',
+])
+
 const LINARIA_EXTENSION = '.linaria.module.css'
 
 function traverse(rules) {
@@ -58,15 +63,10 @@ const withLinaria = (nextConfig = {}) => ({
   },
 })
 
-module.exports = withLinaria({
-  future: {
-    webpack5: true,
-  },
-  webpack(config, { isServer, dev }) {
-    // eslint-disable-next-line no-param-reassign
-    config.output.chunkFilename = isServer
-      ? `${dev ? '[name]' : '[name].[fullhash]'}.js`
-      : `static/chunks/${dev ? '[name]' : '[name].[fullhash]'}.js`
-    return config
-  },
-})
+module.exports = withTM(
+  withLinaria({
+    future: {
+      webpack5: true,
+    },
+  }),
+)

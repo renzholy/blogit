@@ -1,6 +1,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Octokit } from 'octokit'
 
+import MarkdownRender from '../components/markdown-render'
+
 const octokit = new Octokit()
 
 type Props = {
@@ -12,7 +14,7 @@ type Params = {
 }
 
 export default function Path(props: Props) {
-  return props.data
+  return <MarkdownRender>{props.data}</MarkdownRender>
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
