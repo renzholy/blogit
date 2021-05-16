@@ -8,9 +8,7 @@ const octokit = new Octokit({
 })
 
 type Props = {
-  path: string
-  content?: string
-  download_url: string | null
+  data?: string
 }
 
 type Params = {
@@ -18,10 +16,7 @@ type Params = {
 }
 
 export default function Path(props: Props) {
-  if (props.path.endsWith('.md') || props.path.endsWith('.MD')) {
-    return <MarkdownRender>{props.content}</MarkdownRender>
-  }
-  return props.download_url
+  return <MarkdownRender>{props.data}</MarkdownRender>
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
@@ -43,9 +38,13 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
     recursive: 'true',
   })
   return {
-    paths: tree.data.tree.map((node) => ({
-      params: { path: node.path!.split('/') },
-    })),
+    paths: tree.data.tree
+      .filter(
+        (node) => node.path?.endsWith('.md') || node.path?.endsWith('.MD'),
+      )
+      .map((node) => ({
+        params: { path: node.path!.split('/') },
+      })),
     fallback: false,
   }
 }
@@ -70,6 +69,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
     path: context.params.path.join('/'),
   })
   return {
-    props: content.data as Props,
+    props: {
+      data:
+        'content' in content.data
+          ? Buffer.from(content.data.content, 'base64').toString()
+          : undefined,
+    },
   }
 }
