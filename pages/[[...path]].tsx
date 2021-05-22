@@ -1,3 +1,4 @@
+import { css } from '@linaria/core'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Octokit } from 'octokit'
 
@@ -16,7 +17,34 @@ type Params = {
 }
 
 export default function Path(props: Props) {
-  return <MarkdownRender>{props.data}</MarkdownRender>
+  return (
+    <div
+      className={css`
+        .utterances {
+          max-width: 900px;
+        }
+      `}>
+      <MarkdownRender
+        className={css`
+          margin: 64px auto 16px;
+          border: solid 1px #e1e4e8;
+          border-radius: 6px;
+          max-width: calc(900px - 32px - 32px - 1px - 1px);
+          padding: 0 32px 16px 32px;
+        `}>
+        {props.data}
+      </MarkdownRender>
+      <script
+        src="https://utteranc.es/client.js"
+        // @ts-ignore
+        repo={`${process.env.NEXT_PUBLIC_OWNER}/${process.env.NEXT_PUBLIC_REPO}`}
+        issue-term="pathname"
+        theme="github-light"
+        crossOrigin="anonymous"
+        async={true}
+      />
+    </div>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
