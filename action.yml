@@ -1,5 +1,8 @@
-name: 'Blogit'
+name: 'blogit-bot'
 description: 'Build blog with Git'
+branding:
+  icon: 'file-text'
+  color: 'yellow'
 runs:
   using: 'docker'
   image: 'Dockerfile'
