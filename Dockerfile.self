@@ -1,7 +1,11 @@
-FROM node:16-slim
-ENV NODE_ENV production
-COPY package.json .
-COPY yarn.lock .
-RUN yarn
+FROM node:alpine AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+FROM node:alpine
+WORKDIR /app
 COPY . .
-RUN yarn build
+COPY --from=deps /app/node_modules ./node_modules
+RUN yarn build && yarn install --production --ignore-scripts --prefer-offline
