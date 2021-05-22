@@ -1,5 +1,7 @@
 FROM node:16-slim
-WORKDIR /app
-ADD * /app/
+ENV NODE_ENV production
+COPY package.json .
+COPY yarn.lock .
 RUN yarn
+COPY . .
 RUN yarn build
