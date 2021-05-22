@@ -3,6 +3,8 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { Octokit } from 'octokit'
 import dayjs from 'dayjs'
 import Link from 'next/link'
+import Head from 'next/head'
+import { useMemo } from 'react'
 
 import MarkdownRender from '../components/markdown-render'
 
@@ -11,8 +13,8 @@ const octokit = new Octokit({
 })
 
 type Props = {
-  lastModified?: string
-  data?: string
+  lastModified: string | null
+  data: string | null
 }
 
 type Params = {
@@ -23,101 +25,114 @@ export default function Path(props: Props) {
   const links =
     process.env.NEXT_PUBLIC_LINKS?.split(';').map((item) => item.split(',')) ||
     []
+  const title = useMemo(() => props.data?.match(/# (.+)/)?.[1], [props.data])
 
+  if (!props.data) {
+    return null
+  }
   return (
-    <div
-      className={css`
-        margin: 78px auto 16px;
-        max-width: 900px;
-        padding: 0 32px;
-      `}>
-      <nav
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <div
         className={css`
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 62px;
-          background-color: #24292e;
-          display: flex;
-          align-items: center;
+          margin: 78px auto 16px;
+          max-width: 900px;
           padding: 0 32px;
-          & a {
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            margin-left: 16px;
-          }
-          & a:hover,
-          a:focus {
-            color: hsla(0, 0%, 100%, 0.7);
-          }
         `}>
-        <Link href="/">
-          <img
-            className={css`
-              border-radius: 100%;
-              cursor: pointer;
-            `}
-            src={`https://github.com/${process.env.NEXT_PUBLIC_OWNER}.png?size=32`}
-            alt="avatar"
-          />
-        </Link>
-        {links
-          .filter(
-            ([, link]) => !link.startsWith('http') && !link.startsWith('//'),
-          )
-          .map(([title, link]) => (
-            <Link key={title} href={link}>
-              {title}
-            </Link>
-          ))}
-        <div
+        <nav
           className={css`
-            flex: 1;
-          `}
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 62px;
+            background-color: #24292e;
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+            & a {
+              color: #ffffff;
+              font-size: 14px;
+              font-weight: 600;
+              text-decoration: none;
+              margin-left: 16px;
+            }
+            & a:hover,
+            a:focus {
+              color: hsla(0, 0%, 100%, 0.7);
+            }
+          `}>
+          <Link href="/">
+            <img
+              className={css`
+                border-radius: 100%;
+                cursor: pointer;
+              `}
+              src={`https://github.com/${process.env.NEXT_PUBLIC_OWNER}.png?size=32`}
+              alt="avatar"
+            />
+          </Link>
+          {links
+            .filter(
+              ([, link]) => !link.startsWith('http') && !link.startsWith('//'),
+            )
+            .map(([name, href]) => (
+              <Link
+                key={name}
+                href={href === process.env.NEXT_PUBLIC_INDEX ? '/' : href}>
+                {name}
+              </Link>
+            ))}
+          <div
+            className={css`
+              flex: 1;
+            `}
+          />
+          {links
+            .filter(
+              ([, link]) => link.startsWith('http') || link.startsWith('//'),
+            )
+            .map(([name, href]) => (
+              <a key={name} href={href} target="_blank" rel="noreferrer">
+                {name}
+              </a>
+            ))}
+        </nav>
+        <MarkdownRender
+          className={css`
+            padding: 0;
+          `}>
+          {props.data}
+        </MarkdownRender>
+        {props.lastModified ? (
+          <footer
+            className={css`
+              border-top: 1px solid #eaecef;
+              padding-top: 16px;
+              font-size: 12px;
+              color: #6a737d;
+              display: flex;
+              justify-content: flex-end;
+            `}>
+            Last Modified:&nbsp;
+            <time title={props.lastModified}>
+              {dayjs(props.lastModified).format('YYYY-MM-DD')}
+            </time>
+          </footer>
+        ) : null}
+        <script
+          src="https://utteranc.es/client.js"
+          // @ts-ignore
+          repo={`${process.env.NEXT_PUBLIC_OWNER}/${process.env.NEXT_PUBLIC_REPO}`}
+          issue-term="pathname"
+          theme="github-light"
+          crossOrigin="anonymous"
+          async={true}
         />
-        {links
-          .filter(
-            ([, link]) => link.startsWith('http') || link.startsWith('//'),
-          )
-          .map(([title, link]) => (
-            <a key={title} href={link} target="_blank" rel="noreferrer">
-              {title}
-            </a>
-          ))}
-      </nav>
-      <MarkdownRender
-        className={css`
-          padding: 0;
-        `}>
-        {props.data}
-      </MarkdownRender>
-      <footer
-        className={css`
-          border-top: 1px solid #eaecef;
-          padding-top: 16px;
-          font-size: 12px;
-          color: #6a737d;
-          display: flex;
-          justify-content: flex-end;
-        `}>
-        Last Modified:&nbsp;
-        <time title={props.lastModified}>
-          {dayjs(props.lastModified).format('YYYY-MM-DD')}
-        </time>
-      </footer>
-      <script
-        src="https://utteranc.es/client.js"
-        // @ts-ignore
-        repo={`${process.env.NEXT_PUBLIC_OWNER}/${process.env.NEXT_PUBLIC_REPO}`}
-        issue-term="pathname"
-        theme="github-light"
-        crossOrigin="anonymous"
-        async={true}
-      />
-    </div>
+      </div>
+    </>
   )
 }
 
@@ -177,11 +192,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   })
   return {
     props: {
-      lastModified: content.headers['last-modified'],
+      lastModified: content.headers['last-modified'] || null,
       data:
         'content' in content.data
           ? Buffer.from(content.data.content, 'base64').toString()
-          : undefined,
+          : null,
     },
   }
 }
