@@ -16,6 +16,7 @@ import type { Node } from 'unist'
 import { emoji } from './plugins/emoji'
 import MonaCode from '../components/mona-code'
 import LocalImage from '../components/local-image'
+import LocalLink from '../components/local-link'
 
 function handleHtml(_h: H, node: Node) {
   return (
@@ -56,6 +57,7 @@ export function process(value: string): ReactNode {
       components: {
         code: MonaCode,
         img: LocalImage,
+        a: LocalLink,
       },
     })
     .processSync(value)
