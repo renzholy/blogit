@@ -7,7 +7,7 @@ import Link from 'next/link'
 import MarkdownRender from '../components/markdown-render'
 
 const octokit = new Octokit({
-  auth: process.env.PAT,
+  auth: process.env.GHP,
 })
 
 type Props = {
@@ -38,6 +38,10 @@ export default function Path(props: Props) {
             font-weight: 600;
             text-decoration: none;
             margin-left: 16px;
+          }
+          & a:hover,
+          a:focus {
+            color: hsla(0, 0%, 100%, 0.7);
           }
         `}>
         <Link href="/">
