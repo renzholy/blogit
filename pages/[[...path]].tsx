@@ -21,12 +21,18 @@ type Params = {
 
 export default function Path(props: Props) {
   return (
-    <>
+    <div
+      className={css`
+        margin: 78px auto 16px;
+        max-width: 900px;
+        padding: 0 32px;
+      `}>
       <nav
         className={css`
           position: fixed;
           top: 0;
-          width: calc(100% - 64px);
+          left: 0;
+          right: 0;
           height: 62px;
           background-color: #24292e;
           display: flex;
@@ -69,33 +75,26 @@ export default function Path(props: Props) {
             </a>
           ))}
       </nav>
-      <div
+      <MarkdownRender
         className={css`
-          margin: 78px auto 16px;
-          max-width: 900px;
-          padding: 0 32px;
+          padding: 0;
         `}>
-        <MarkdownRender
-          className={css`
-            padding: 0;
-          `}>
-          {props.data}
-        </MarkdownRender>
-        <footer
-          className={css`
-            border-top: 1px solid #eaecef;
-            padding-top: 16px;
-            font-size: 12px;
-            color: #6a737d;
-            display: flex;
-            justify-content: flex-end;
-          `}>
-          Last Modified:&nbsp;
-          <time title={props.lastModified}>
-            {dayjs(props.lastModified).format('YYYY-MM-DD')}
-          </time>
-        </footer>
-      </div>
+        {props.data}
+      </MarkdownRender>
+      <footer
+        className={css`
+          border-top: 1px solid #eaecef;
+          padding-top: 16px;
+          font-size: 12px;
+          color: #6a737d;
+          display: flex;
+          justify-content: flex-end;
+        `}>
+        Last Modified:&nbsp;
+        <time title={props.lastModified}>
+          {dayjs(props.lastModified).format('YYYY-MM-DD')}
+        </time>
+      </footer>
       <script
         src="https://utteranc.es/client.js"
         // @ts-ignore
@@ -105,7 +104,7 @@ export default function Path(props: Props) {
         crossOrigin="anonymous"
         async={true}
       />
-    </>
+    </div>
   )
 }
 
