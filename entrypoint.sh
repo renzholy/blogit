@@ -1,6 +1,5 @@
 #!/bin/sh
 
-cd /app
+mv /app/* ./
 yarn build
 yarn export
-mv /app/out /github/workflow/out
