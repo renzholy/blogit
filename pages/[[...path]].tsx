@@ -1,6 +1,7 @@
 import { css } from '@linaria/core'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Octokit } from 'octokit'
+import dayjs from 'dayjs'
 import Link from 'next/link'
 
 import MarkdownRender from '../components/markdown-render'
@@ -10,6 +11,7 @@ const octokit = new Octokit({
 })
 
 type Props = {
+  date?: string
   data?: string
 }
 
@@ -69,13 +71,33 @@ export default function Path(props: Props) {
           </a>
         </div>
       </nav>
-      <MarkdownRender
+      <div
         className={css`
           margin: 78px auto 16px;
           max-width: 900px;
+          padding: 0 32px;
         `}>
-        {props.data}
-      </MarkdownRender>
+        <MarkdownRender
+          className={css`
+            padding: 0;
+          `}>
+          {props.data}
+        </MarkdownRender>
+        <footer
+          className={css`
+            border-top: 1px solid #eaecef;
+            padding-top: 16px;
+            font-size: 12px;
+            color: #6a737d;
+            display: flex;
+            justify-content: flex-end;
+          `}>
+          Last Modified:&nbsp;
+          <time title={props.date}>
+            {dayjs(props.date).format('YYYY-MM-DD')}
+          </time>
+        </footer>
+      </div>
       <script
         src="https://utteranc.es/client.js"
         // @ts-ignore
@@ -146,6 +168,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   })
   return {
     props: {
+      date: content.headers['last-modified'],
       data:
         'content' in content.data
           ? Buffer.from(content.data.content, 'base64').toString()
