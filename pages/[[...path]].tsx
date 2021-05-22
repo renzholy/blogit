@@ -32,6 +32,13 @@ export default function Path(props: Props) {
           display: flex;
           align-items: center;
           padding: 0 32px;
+          & a {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 16px;
+          }
         `}>
         <Link href="/">
           <img
@@ -43,50 +50,20 @@ export default function Path(props: Props) {
             alt="avatar"
           />
         </Link>
-        <div
-          className={css`
-            & a {
-              color: #ffffff;
-              font-size: 14px;
-              font-weight: 600;
-              text-decoration: none;
-              margin-left: 16px;
-            }
-          `}>
-          <Link href="/">Home</Link>
-          <Link href={`/${process.env.NEXT_PUBLIC_ABOUT}`}>About</Link>
-        </div>
+        <Link href="/">Home</Link>
+        <Link href={`/${process.env.NEXT_PUBLIC_ABOUT}`}>About</Link>
         <div
           className={css`
             flex: 1;
           `}
         />
-        <div
-          className={css`
-            & a {
-              color: #ffffff;
-              font-size: 14px;
-              font-weight: 600;
-              text-decoration: none;
-              margin-left: 16px;
-            }
-          `}>
-          <a
-            href="https://github.com/RenzHoly"
-            target="_blank"
-            rel="noreferrer">
-            GitHub
-          </a>
-          <a href="http://twitter.com/rezholy" target="_blank" rel="noreferrer">
-            Twitter
-          </a>
-          <a
-            href="https://web.okjike.com/u/d25026f2-18ce-48aa-9ea7-c05a25446368"
-            target="_blank"
-            rel="noreferrer">
-            Jike
-          </a>
-        </div>
+        {process.env.NEXT_PUBLIC_LINKS?.split(';')
+          .map((item) => item.split(','))
+          .map(([title, link]) => (
+            <a key={title} href={link} target="_blank" rel="noreferrer">
+              {title}
+            </a>
+          ))}
       </nav>
       <div
         className={css`
@@ -173,9 +150,6 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   if (!process.env.NEXT_PUBLIC_REPO) {
     throw new Error('please set process.env.NEXT_PUBLIC_REPO')
   }
-  console.log(
-    context.params.path?.join('/') || process.env.NEXT_PUBLIC_INDEX || 'README',
-  )
   const content = await octokit.rest.repos.getContent({
     owner: process.env.NEXT_PUBLIC_OWNER,
     repo: process.env.NEXT_PUBLIC_REPO,
