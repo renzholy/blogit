@@ -5,6 +5,6 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 FROM node:alpine
-WORKDIR /app
+WORKDIR /github/workflow
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules

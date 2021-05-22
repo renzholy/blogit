@@ -1,5 +1,5 @@
 FROM ghcr.io/renzholy/blogit:latest
-WORKDIR /app
+WORKDIR /github/workflow
 ENV NODE_ENV=production
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
