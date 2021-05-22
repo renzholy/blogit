@@ -11,7 +11,7 @@ const octokit = new Octokit({
 })
 
 type Props = {
-  date?: string
+  lastModified?: string
   data?: string
 }
 
@@ -31,7 +31,6 @@ export default function Path(props: Props) {
           background-color: #24292e;
           display: flex;
           align-items: center;
-          justify-content: space-between;
           padding: 0 32px;
         `}>
         <Link href="/">
@@ -44,6 +43,24 @@ export default function Path(props: Props) {
             alt="avatar"
           />
         </Link>
+        <div
+          className={css`
+            & a {
+              color: #ffffff;
+              font-size: 14px;
+              font-weight: 600;
+              text-decoration: none;
+              margin-left: 16px;
+            }
+          `}>
+          <Link href="/">Home</Link>
+          <Link href={`/${process.env.NEXT_PUBLIC_ABOUT}`}>About</Link>
+        </div>
+        <div
+          className={css`
+            flex: 1;
+          `}
+        />
         <div
           className={css`
             & a {
@@ -93,8 +110,8 @@ export default function Path(props: Props) {
             justify-content: flex-end;
           `}>
           Last Modified:&nbsp;
-          <time title={props.date}>
-            {dayjs(props.date).format('YYYY-MM-DD')}
+          <time title={props.lastModified}>
+            {dayjs(props.lastModified).format('YYYY-MM-DD')}
           </time>
         </footer>
       </div>
@@ -133,11 +150,9 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
     paths: [
       { params: { path: [] } }, // index page
       ...tree.data.tree
-        .filter(
-          (node) => node.path?.endsWith('.md') || node.path?.endsWith('.MD'),
-        )
+        .filter((node) => node.path?.endsWith('.md'))
         .map((node) => ({
-          params: { path: node.path!.split('/') },
+          params: { path: node.path!.replace(/\.md$/, '').split('/') },
         })),
     ],
     fallback: false,
@@ -158,17 +173,21 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   if (!process.env.NEXT_PUBLIC_REPO) {
     throw new Error('please set process.env.NEXT_PUBLIC_REPO')
   }
+  console.log(
+    context.params.path?.join('/') || process.env.NEXT_PUBLIC_INDEX || 'README',
+  )
   const content = await octokit.rest.repos.getContent({
     owner: process.env.NEXT_PUBLIC_OWNER,
     repo: process.env.NEXT_PUBLIC_REPO,
-    path:
+    path: `${
       context.params.path?.join('/') ||
       process.env.NEXT_PUBLIC_INDEX ||
-      'README.md',
+      'README'
+    }.md`,
   })
   return {
     props: {
-      date: content.headers['last-modified'],
+      lastModified: content.headers['last-modified'],
       data:
         'content' in content.data
           ? Buffer.from(content.data.content, 'base64').toString()
