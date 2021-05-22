@@ -20,6 +20,10 @@ type Params = {
 }
 
 export default function Path(props: Props) {
+  const links =
+    process.env.NEXT_PUBLIC_LINKS?.split(';').map((item) => item.split(',')) ||
+    []
+
   return (
     <div
       className={css`
@@ -60,15 +64,24 @@ export default function Path(props: Props) {
             alt="avatar"
           />
         </Link>
-        <Link href="/">Home</Link>
-        <Link href={`/${process.env.NEXT_PUBLIC_ABOUT}`}>About</Link>
+        {links
+          .filter(
+            ([, link]) => !link.startsWith('http') && !link.startsWith('//'),
+          )
+          .map(([title, link]) => (
+            <Link key={title} href={link}>
+              {title}
+            </Link>
+          ))}
         <div
           className={css`
             flex: 1;
           `}
         />
-        {process.env.NEXT_PUBLIC_LINKS?.split(';')
-          .map((item) => item.split(','))
+        {links
+          .filter(
+            ([, link]) => link.startsWith('http') || link.startsWith('//'),
+          )
           .map(([title, link]) => (
             <a key={title} href={link} target="_blank" rel="noreferrer">
               {title}
