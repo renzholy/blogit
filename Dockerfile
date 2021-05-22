@@ -1,6 +1,3 @@
-FROM node:16-slim
-WORKDIR /app
-ADD * /app/
-RUN yarn
-RUN yarn build
+FROM ghcr.io/RenzHoly/blogit
+ENV NODE_ENV=production
 RUN yarn export
