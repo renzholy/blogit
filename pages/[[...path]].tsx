@@ -1,6 +1,7 @@
 import { css } from '@linaria/core'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Octokit } from 'octokit'
+import Link from 'next/link'
 
 import MarkdownRender from '../components/markdown-render'
 
@@ -18,19 +19,60 @@ type Params = {
 
 export default function Path(props: Props) {
   return (
-    <div
-      className={css`
-        .utterances {
-          max-width: 900px;
-        }
-      `}>
+    <>
+      <nav
+        className={css`
+          position: fixed;
+          top: 0;
+          width: calc(100% - 64px);
+          height: 62px;
+          background-color: #24292e;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 32px;
+        `}>
+        <Link href="/">
+          <img
+            className={css`
+              border-radius: 100%;
+              cursor: pointer;
+            `}
+            src={`https://github.com/${process.env.NEXT_PUBLIC_OWNER}.png?size=32`}
+            alt="avatar"
+          />
+        </Link>
+        <div
+          className={css`
+            & a {
+              color: #ffffff;
+              font-size: 14px;
+              font-weight: 600;
+              text-decoration: none;
+              margin-left: 16px;
+            }
+          `}>
+          <a
+            href="https://github.com/RenzHoly"
+            target="_blank"
+            rel="noreferrer">
+            GitHub
+          </a>
+          <a href="http://twitter.com/rezholy" target="_blank" rel="noreferrer">
+            Twitter
+          </a>
+          <a
+            href="https://web.okjike.com/u/d25026f2-18ce-48aa-9ea7-c05a25446368"
+            target="_blank"
+            rel="noreferrer">
+            Jike
+          </a>
+        </div>
+      </nav>
       <MarkdownRender
         className={css`
-          margin: 64px auto 16px;
-          border: solid 1px #e1e4e8;
-          border-radius: 6px;
-          max-width: calc(900px - 32px - 32px - 1px - 1px);
-          padding: 0 32px 16px 32px;
+          margin: 78px auto 16px;
+          max-width: 900px;
         `}>
         {props.data}
       </MarkdownRender>
@@ -43,7 +85,7 @@ export default function Path(props: Props) {
         crossOrigin="anonymous"
         async={true}
       />
-    </div>
+    </>
   )
 }
 

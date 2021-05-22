@@ -5,6 +5,8 @@ import Head from 'next/head'
 import type { AppProps } from 'next/app'
 import 'normalize.css'
 
+import './global.css'
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
