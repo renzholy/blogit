@@ -39,16 +39,16 @@ export default function Path(props: Props) {
           top: 0;
           left: 0;
           right: 0;
-          height: 62px;
+          height: 64px;
           background-color: #24292e;
           padding: 0 32px;
         `}
       />
       <div
         className={css`
-          margin: 94px auto 32px;
+          margin: 96px auto 32px;
           max-width: 900px;
-          padding: 0 32px;
+          padding: 0 16px;
         `}>
         <MarkdownRender
           className={css`

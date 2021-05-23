@@ -7,7 +7,11 @@ export default function Avatar() {
   return (
     <Link href="/" passHref={true}>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a>
+      <a
+        className={css`
+          line-height: 0;
+          margin: 0 !important;
+        `}>
         <img
           className={css`
             border-radius: 100%;
