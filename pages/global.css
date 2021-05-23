@@ -2,11 +2,6 @@
   display: none;
 }
 
-.utterances {
-  margin-top: -16px;
-  max-width: 900px;
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
     sans-serif, Apple Color Emoji, Segoe UI Emoji;

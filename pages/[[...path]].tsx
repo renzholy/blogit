@@ -7,6 +7,7 @@ import Head from 'next/head'
 import { useMemo } from 'react'
 
 import MarkdownRender from '../components/markdown-render'
+import Utterances from '../components/utterances'
 
 const octokit = new Octokit({
   auth: process.env.GHP,
@@ -122,15 +123,7 @@ export default function Path(props: Props) {
             </time>
           </footer>
         ) : null}
-        <script
-          src="https://utteranc.es/client.js"
-          // @ts-ignore
-          repo={`${process.env.NEXT_PUBLIC_OWNER}/${process.env.NEXT_PUBLIC_REPO}`}
-          issue-term="pathname"
-          theme="github-light"
-          crossOrigin="anonymous"
-          async={true}
-        />
+        <Utterances />
       </div>
     </>
   )
