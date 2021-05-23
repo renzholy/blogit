@@ -1,6 +1,8 @@
 import { css, cx } from '@linaria/core'
 import Link from 'next/link'
 
+import Avatar from './avatar'
+
 export default function Navigation(props: { className?: string }) {
   const links =
     process.env.NEXT_PUBLIC_LINKS?.split(';').map((item) => item.split(',')) ||
@@ -26,16 +28,7 @@ export default function Navigation(props: { className?: string }) {
           }
         `,
       )}>
-      <Link href="/">
-        <img
-          className={css`
-            border-radius: 100%;
-            cursor: pointer;
-          `}
-          src={`https://github.com/${process.env.NEXT_PUBLIC_OWNER}.png?size=32`}
-          alt="avatar"
-        />
-      </Link>
+      <Avatar />
       {links
         .filter(
           ([, link]) => !link.startsWith('http') && !link.startsWith('//'),
