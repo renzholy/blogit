@@ -85,6 +85,9 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   if (!process.env.NEXT_PUBLIC_REPO) {
     throw new Error('please set process.env.NEXT_PUBLIC_REPO')
   }
+  if (!process.env.NEXT_PUBLIC_BRANCH) {
+    throw new Error('please set process.env.NEXT_PUBLIC_BRANCH')
+  }
   const ref = await octokit.rest.git.getRef({
     owner: process.env.NEXT_PUBLIC_OWNER,
     repo: process.env.NEXT_PUBLIC_REPO,
