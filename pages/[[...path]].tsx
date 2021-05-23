@@ -112,7 +112,7 @@ export default function Path(props: Props) {
             className={css`
               border-top: 1px solid #eaecef;
               padding-top: 16px;
-              font-size: 12px;
+              font-size: 14px;
               color: #6a737d;
               display: flex;
               justify-content: flex-end;

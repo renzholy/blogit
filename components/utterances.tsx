@@ -1,8 +1,10 @@
 import { css } from '@linaria/core'
+import { useRouter } from 'next/dist/client/router'
 import { useEffect, useRef } from 'react'
 
 export default function Utterances() {
   const ref = useRef<HTMLSelectElement>(null)
+  const router = useRouter()
   useEffect(() => {
     if (!ref.current) {
       return undefined
@@ -21,16 +23,15 @@ export default function Utterances() {
     const { current } = ref
     current.appendChild(script)
     return () => {
-      current?.removeChild(script)
+      current.childNodes.forEach((child) => current.removeChild(child))
     }
-  }, [])
+  }, [router.query])
 
   return (
     <section
       ref={ref}
       className={css`
         .utterances {
-          margin-top: -32px;
           max-width: 900px;
         }
       `}
