@@ -31,6 +31,7 @@ export default function Utterances() {
     <section
       ref={ref}
       className={css`
+        user-select: none;
         .utterances {
           max-width: 900px;
         }

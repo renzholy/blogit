@@ -13,6 +13,7 @@ export default function Navigation(props: { className?: string }) {
       className={cx(
         props.className,
         css`
+          user-select: none;
           display: flex;
           align-items: center;
           & a {
