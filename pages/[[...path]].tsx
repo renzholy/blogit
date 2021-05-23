@@ -59,14 +59,14 @@ export default function Path(props: Props) {
         {props.lastModified ? (
           <footer
             className={css`
-              border-top: 1px solid #eaecef;
+              border-bottom: 1px solid #eaecef;
               padding: 16px 0;
               font-size: 14px;
               color: #6a737d;
               display: flex;
               justify-content: flex-end;
             `}>
-            Last Modified:&nbsp;
+            last modified:&nbsp;
             <time title={props.lastModified}>
               {dayjs(props.lastModified).format('YYYY-MM-DD')}
             </time>
