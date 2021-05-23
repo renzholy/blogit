@@ -68,5 +68,10 @@ module.exports = withTM(
     future: {
       webpack5: true,
     },
+    experimental: {
+      turboMode: true,
+      workerThreads: true,
+      disableOptimizedLoading: false,
+    },
   }),
 )

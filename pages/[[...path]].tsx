@@ -31,6 +31,7 @@ export default function Path(props: Props) {
     <>
       <Head>
         <title>{title}</title>
+        <meta name="description" content={props.data.substring(0, 256)} />
       </Head>
       <div
         className={css`
