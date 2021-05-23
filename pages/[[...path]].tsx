@@ -7,7 +7,6 @@ import { useMemo } from 'react'
 
 import MarkdownRender from '../components/markdown-render'
 import Utterances from '../components/utterances'
-import Navigation from '../components/navigation'
 
 const octokit = new Octokit({
   auth: process.env.GHP,
@@ -33,17 +32,6 @@ export default function Path(props: Props) {
       <Head>
         <title>{title}</title>
       </Head>
-      <Navigation
-        className={css`
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 64px;
-          background-color: #24292e;
-          padding: 0 32px;
-        `}
-      />
       <div
         className={css`
           margin: 96px auto 32px;
