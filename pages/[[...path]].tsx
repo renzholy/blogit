@@ -112,12 +112,16 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   if (!process.env.NEXT_PUBLIC_REPO) {
     throw new Error('please set process.env.NEXT_PUBLIC_REPO')
   }
+  if (!process.env.NEXT_PUBLIC_BRANCH) {
+    throw new Error('please set process.env.NEXT_PUBLIC_BRANCH')
+  }
   if (!process.env.NEXT_PUBLIC_INDEX) {
     throw new Error('please set process.env.NEXT_PUBLIC_INDEX')
   }
   const content = await octokit.rest.repos.getContent({
     owner: process.env.NEXT_PUBLIC_OWNER,
     repo: process.env.NEXT_PUBLIC_REPO,
+    ref: `heads/${process.env.NEXT_PUBLIC_BRANCH}`,
     path: `${
       context.params.path?.join('/') || process.env.NEXT_PUBLIC_INDEX
     }.md`,

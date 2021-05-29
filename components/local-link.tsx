@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable react/jsx-props-no-spreading */
 
 import { ReactNode } from 'react'
 import { ComponentProps } from 'rehype-react'
 import Link from 'next/link'
+import { css } from '@linaria/core'
 
 export default function LocalLink(
   props: ComponentProps & {
@@ -11,6 +13,17 @@ export default function LocalLink(
     href?: string
   },
 ) {
+  if (props.href?.endsWith('.mp4') || props.href?.endsWith('.mov')) {
+    return (
+      <video
+        src={props.href}
+        controls={true}
+        className={css`
+          max-width: 100%;
+        `}
+      />
+    )
+  }
   if (
     !props.href ||
     props.href.startsWith('http') ||
