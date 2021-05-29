@@ -6,22 +6,3 @@ branding:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-inputs:
-  token:
-    description: 'token'
-    required: true
-  owner:
-    description: 'owner'
-    required: true
-  repo:
-    description: 'repo'
-    required: true
-  branch:
-    description: 'branch'
-    required: true
-  index:
-    description: 'index'
-    required: true
-  links:
-    description: 'links'
-    required: true
