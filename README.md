@@ -1,8 +1,16 @@
 # Blogit
 
+Environments:
+
+- GITHUB_TOKEN
+- NEXT_PUBLIC_OWNER
+- NEXT_PUBLIC_REPO
+- NEXT_PUBLIC_BRANCH
+- NEXT_PUBLIC_TITLE
+- NEXT_PUBLIC_INDEX
+- NEXT_PUBLIC_LINKS
+
 Todos:
 
-- [ ] SEO
 - [ ] RSS
 - [ ] favicon
-- [ ] next image
