@@ -1,8 +1,6 @@
 import { css, cx } from '@linaria/core'
 import Link from 'next/link'
 
-import Avatar from './avatar'
-
 export default function Navigation(props: { className?: string }) {
   const links =
     process.env.NEXT_PUBLIC_LINKS?.split(';').map((item) => item.split(',')) ||
@@ -16,20 +14,21 @@ export default function Navigation(props: { className?: string }) {
           user-select: none;
           display: flex;
           align-items: center;
-          & a {
+          a {
             color: #ffffff;
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
+          }
+          a + a {
             margin-left: 16px;
           }
-          & a:hover,
+          a:hover,
           a:focus {
             color: hsla(0, 0%, 100%, 0.7);
           }
         `,
       )}>
-      <Avatar />
       {links
         .filter(
           ([, link]) => !link.startsWith('http') && !link.startsWith('//'),

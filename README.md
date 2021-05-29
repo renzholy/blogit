@@ -13,4 +13,3 @@ Environments:
 Todos:
 
 - [ ] RSS
-- [ ] favicon

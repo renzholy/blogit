@@ -29,6 +29,11 @@ export default function Path(props: Props) {
       <Head>
         <title>{process.env.NEXT_PUBLIC_TITLE || 'Blogit'}</title>
         <meta name="description" content={props.data.substring(0, 256)} />
+        <link
+          rel="shortcut icon"
+          type="image/png"
+          href={`https://github.com/${process.env.NEXT_PUBLIC_OWNER}.png?size=128`}
+        />
       </Head>
       <div
         className={css`
