@@ -18,6 +18,7 @@ export default function LocalLink(
       <video
         src={props.href}
         controls={true}
+        playsInline={true}
         className={css`
           max-width: 100%;
         `}
