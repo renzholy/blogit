@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { Octokit } from 'octokit'
 import dayjs from 'dayjs'
 import Head from 'next/head'
+import { useMemo } from 'react'
 
 import MarkdownRender from '../components/markdown-render'
 import Utterances from '../components/utterances'
@@ -21,13 +22,15 @@ type Params = {
 }
 
 export default function Path(props: Props) {
+  const title = useMemo(() => props.data?.match(/# (.+)/)?.[1], [props.data])
+
   if (!props.data) {
     return null
   }
   return (
     <>
       <Head>
-        <title>{process.env.NEXT_PUBLIC_TITLE || 'Blogit'}</title>
+        <title>{title || process.env.NEXT_PUBLIC_TITLE || 'Blogit'}</title>
         <meta name="description" content={props.data.substring(0, 256)} />
         <link
           rel="shortcut icon"
