@@ -22,7 +22,7 @@ type Params = {
 }
 
 export default function Path(props: Props) {
-  const title = useMemo(() => props.data?.match(/# (.+)/)?.[1], [props.data])
+  const title = useMemo(() => props.data?.match(/^# (.+)/)?.[1], [props.data])
 
   if (!props.data) {
     return null
@@ -41,7 +41,7 @@ export default function Path(props: Props) {
       <div
         className={css`
           margin: 96px auto 32px;
-          max-width: 900px;
+          max-width: var(--max-width);
           padding: 0 16px;
         `}>
         <MarkdownRender

@@ -6,7 +6,8 @@ export default function Utterances() {
   const ref = useRef<HTMLSelectElement>(null)
   const router = useRouter()
   useEffect(() => {
-    if (!ref.current) {
+    const { current } = ref
+    if (!current) {
       return undefined
     }
     const script = document.createElement('script')
@@ -20,7 +21,6 @@ export default function Utterances() {
     script.setAttribute('issue-term', 'pathname')
     script.setAttribute('label', 'blog-comment')
     script.setAttribute('theme', 'github-light')
-    const { current } = ref
     current.appendChild(script)
     return () => {
       current.childNodes.forEach((child) => current.removeChild(child))
@@ -33,7 +33,7 @@ export default function Utterances() {
       className={css`
         user-select: none;
         .utterances {
-          max-width: 900px;
+          max-width: var(--max-width);
         }
       `}
     />
