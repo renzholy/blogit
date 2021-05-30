@@ -16,7 +16,7 @@ export default function LocalLink(
   if (props.href?.endsWith('.mp4') || props.href?.endsWith('.mov')) {
     return (
       <video
-        src={props.href}
+        src={`${props.href}#t=0.001`}
         controls={true}
         playsInline={true}
         className={css`
