@@ -84,12 +84,18 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   }
   const ref = await octokit.rest.git.getRef({
     owner: process.env.NEXT_PUBLIC_OWNER,
-    repo: process.env.NEXT_PUBLIC_REPO,
+    repo: process.env.NEXT_PUBLIC_REPO.replace(
+      `${process.env.NEXT_PUBLIC_OWNER}/`,
+      '',
+    ),
     ref: process.env.NEXT_PUBLIC_REF.replace(/^refs\//, ''),
   })
   const tree = await octokit.rest.git.getTree({
     owner: process.env.NEXT_PUBLIC_OWNER,
-    repo: process.env.NEXT_PUBLIC_REPO,
+    repo: process.env.NEXT_PUBLIC_REPO.replace(
+      `${process.env.NEXT_PUBLIC_OWNER}/`,
+      '',
+    ),
     tree_sha: ref.data.object.sha,
     recursive: 'true',
   })
@@ -128,7 +134,10 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   }
   const content = await octokit.rest.repos.getContent({
     owner: process.env.NEXT_PUBLIC_OWNER,
-    repo: process.env.NEXT_PUBLIC_REPO,
+    repo: process.env.NEXT_PUBLIC_REPO.replace(
+      `${process.env.NEXT_PUBLIC_OWNER}/`,
+      '',
+    ),
     ref: process.env.NEXT_PUBLIC_REF.replace(/^refs\//, ''),
     path: `${
       context.params.path?.join('/') || process.env.NEXT_PUBLIC_INDEX
