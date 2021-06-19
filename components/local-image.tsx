@@ -24,9 +24,12 @@ export default function LocalImage(
     if (!process.env.NEXT_PUBLIC_REPO) {
       return undefined
     }
-    return `https://raw.githubusercontent.com/${process.env.NEXT_PUBLIC_REPO}/${
-      process.env.NEXT_PUBLIC_BRANCH
-    }${resolve(dirname(`/${path?.join('/') || ''}`), props.src)}`
+    return `https://raw.githubusercontent.com/${
+      process.env.NEXT_PUBLIC_REPO
+    }/${process.env.NEXT_PUBLIC_REF?.replace(
+      /^refs\/(head|tag)s\//,
+      '',
+    )}${resolve(dirname(`/${path?.join('/') || ''}`), props.src)}`
   }, [path, props.src])
 
   return <img {...props} alt={props.alt} src={src} />

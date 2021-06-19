@@ -79,13 +79,13 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   if (!process.env.NEXT_PUBLIC_REPO) {
     throw new Error('please set process.env.NEXT_PUBLIC_REPO')
   }
-  if (!process.env.NEXT_PUBLIC_BRANCH) {
-    throw new Error('please set process.env.NEXT_PUBLIC_BRANCH')
+  if (!process.env.NEXT_PUBLIC_REF) {
+    throw new Error('please set process.env.NEXT_PUBLIC_REF')
   }
   const ref = await octokit.rest.git.getRef({
     owner: process.env.NEXT_PUBLIC_OWNER,
     repo: process.env.NEXT_PUBLIC_REPO,
-    ref: `heads/${process.env.NEXT_PUBLIC_BRANCH}`,
+    ref: process.env.NEXT_PUBLIC_REF.replace(/^refs\//, ''),
   })
   const tree = await octokit.rest.git.getTree({
     owner: process.env.NEXT_PUBLIC_OWNER,
@@ -120,8 +120,8 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   if (!process.env.NEXT_PUBLIC_REPO) {
     throw new Error('please set process.env.NEXT_PUBLIC_REPO')
   }
-  if (!process.env.NEXT_PUBLIC_BRANCH) {
-    throw new Error('please set process.env.NEXT_PUBLIC_BRANCH')
+  if (!process.env.NEXT_PUBLIC_REF) {
+    throw new Error('please set process.env.NEXT_PUBLIC_REF')
   }
   if (!process.env.NEXT_PUBLIC_INDEX) {
     throw new Error('please set process.env.NEXT_PUBLIC_INDEX')
@@ -129,7 +129,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   const content = await octokit.rest.repos.getContent({
     owner: process.env.NEXT_PUBLIC_OWNER,
     repo: process.env.NEXT_PUBLIC_REPO,
-    ref: `heads/${process.env.NEXT_PUBLIC_BRANCH}`,
+    ref: process.env.NEXT_PUBLIC_REF.replace(/^refs\//, ''),
     path: `${
       context.params.path?.join('/') || process.env.NEXT_PUBLIC_INDEX
     }.md`,
