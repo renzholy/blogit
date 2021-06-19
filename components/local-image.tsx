@@ -21,12 +21,10 @@ export default function LocalImage(
     ) {
       return props.src
     }
-    if (!process.env.NEXT_PUBLIC_OWNER || !process.env.NEXT_PUBLIC_REPO) {
+    if (!process.env.NEXT_PUBLIC_REPO) {
       return undefined
     }
-    return `https://raw.githubusercontent.com/${
-      process.env.NEXT_PUBLIC_OWNER
-    }/${process.env.NEXT_PUBLIC_REPO}/${
+    return `https://raw.githubusercontent.com/${process.env.NEXT_PUBLIC_REPO}/${
       process.env.NEXT_PUBLIC_BRANCH
     }${resolve(dirname(`/${path?.join('/') || ''}`), props.src)}`
   }, [path, props.src])
