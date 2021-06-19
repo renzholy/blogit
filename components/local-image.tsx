@@ -21,11 +21,11 @@ export default function LocalImage(
     ) {
       return props.src
     }
-    if (!process.env.NEXT_PUBLIC_REPO) {
+    if (!process.env.NEXT_PUBLIC_REPOSITORY) {
       return undefined
     }
     return `https://raw.githubusercontent.com/${
-      process.env.NEXT_PUBLIC_REPO
+      process.env.NEXT_PUBLIC_REPOSITORY
     }/${process.env.NEXT_PUBLIC_REF?.replace(
       /^refs\/(head|tag)s\//,
       '',

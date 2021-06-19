@@ -35,7 +35,9 @@ export default function Path(props: Props) {
         <link
           rel="shortcut icon"
           type="image/png"
-          href={`https://github.com/${process.env.NEXT_PUBLIC_OWNER}.png?size=128`}
+          href={`https://github.com/${
+            process.env.NEXT_PUBLIC_REPOSITORY?.split('/')[0]
+          }.png?size=128`}
         />
       </Head>
       <div
@@ -73,29 +75,22 @@ export default function Path(props: Props) {
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  if (!process.env.NEXT_PUBLIC_OWNER) {
-    throw new Error('please set process.env.NEXT_PUBLIC_OWNER')
-  }
-  if (!process.env.NEXT_PUBLIC_REPO) {
-    throw new Error('please set process.env.NEXT_PUBLIC_REPO')
+  if (!process.env.NEXT_PUBLIC_REPOSITORY) {
+    throw new Error('please set process.env.NEXT_PUBLIC_REPOSITORY')
   }
   if (!process.env.NEXT_PUBLIC_REF) {
     throw new Error('please set process.env.NEXT_PUBLIC_REF')
   }
+  const [owner, ...rest] = process.env.NEXT_PUBLIC_REPOSITORY.split('/')
+  const repo = rest.join('/')
   const ref = await octokit.rest.git.getRef({
-    owner: process.env.NEXT_PUBLIC_OWNER,
-    repo: process.env.NEXT_PUBLIC_REPO.replace(
-      new RegExp(`^${process.env.NEXT_PUBLIC_OWNER}/`),
-      '',
-    ),
+    owner,
+    repo,
     ref: process.env.NEXT_PUBLIC_REF.replace(/^refs\//, ''),
   })
   const tree = await octokit.rest.git.getTree({
-    owner: process.env.NEXT_PUBLIC_OWNER,
-    repo: process.env.NEXT_PUBLIC_REPO.replace(
-      new RegExp(`^${process.env.NEXT_PUBLIC_OWNER}/`),
-      '',
-    ),
+    owner,
+    repo,
     tree_sha: ref.data.object.sha,
     recursive: 'true',
   })
@@ -120,11 +115,8 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
       notFound: true,
     }
   }
-  if (!process.env.NEXT_PUBLIC_OWNER) {
-    throw new Error('please set process.env.NEXT_PUBLIC_OWNER')
-  }
-  if (!process.env.NEXT_PUBLIC_REPO) {
-    throw new Error('please set process.env.NEXT_PUBLIC_REPO')
+  if (!process.env.NEXT_PUBLIC_REPOSITORY) {
+    throw new Error('please set process.env.NEXT_PUBLIC_REPOSITORY')
   }
   if (!process.env.NEXT_PUBLIC_REF) {
     throw new Error('please set process.env.NEXT_PUBLIC_REF')
@@ -132,12 +124,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
   if (!process.env.NEXT_PUBLIC_INDEX) {
     throw new Error('please set process.env.NEXT_PUBLIC_INDEX')
   }
+  const [owner, ...rest] = process.env.NEXT_PUBLIC_REPOSITORY.split('/')
+  const repo = rest.join('/')
   const content = await octokit.rest.repos.getContent({
-    owner: process.env.NEXT_PUBLIC_OWNER,
-    repo: process.env.NEXT_PUBLIC_REPO.replace(
-      new RegExp(`^${process.env.NEXT_PUBLIC_OWNER}/`),
-      '',
-    ),
+    owner,
+    repo,
     ref: process.env.NEXT_PUBLIC_REF.replace(/^refs\//, ''),
     path: `${
       context.params.path?.join('/') || process.env.NEXT_PUBLIC_INDEX
