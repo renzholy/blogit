@@ -14,7 +14,7 @@ const octokit = new Octokit({
 type Props = {
   lastModified: string | null
   data: string | null
-  pathname: string
+  pathname: string | null
 }
 
 type Params = {
@@ -29,11 +29,20 @@ export default function Path(props: Props) {
       'Blogit',
     [props.data],
   )
-  const description = useMemo(() => props.data?.substring(0, 256), [props.data])
+  const description = useMemo(() => {
+    if (!props.data) {
+      return undefined
+    }
+    return (
+      props.data.startsWith(`# ${title}\n\n`)
+        ? props.data.replace(`# ${title}\n\n`, '')
+        : props.data
+    ).substring(0, 256)
+  }, [props.data, title])
   const url = useMemo(
     () =>
       process.env.NEXT_PUBLIC_CNAME
-        ? `https://${process.env.NEXT_PUBLIC_CNAME}/${props.pathname}`
+        ? `https://${process.env.NEXT_PUBLIC_CNAME}/${props.pathname || ''}`
         : undefined,
     [props.pathname],
   )
@@ -90,7 +99,7 @@ export default function Path(props: Props) {
           </time>
         </footer>
       ) : null}
-      {props.pathname === process.env.NEXT_PUBLIC_INDEX ? null : <Utterances />}
+      {props.pathname ? <Utterances /> : null}
     </>
   )
 }
@@ -162,7 +171,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
         'content' in content.data
           ? Buffer.from(content.data.content, 'base64').toString()
           : null,
-      pathname: context.params.path?.join('/') || '',
+      pathname: context.params.path?.join('/') || null,
     },
   }
 }
