@@ -14,7 +14,7 @@ const octokit = new Octokit({
 type Props = {
   lastModified: string | null
   data: string | null
-  isIndex: boolean
+  pathname: string
 }
 
 type Params = {
@@ -22,7 +22,21 @@ type Params = {
 }
 
 export default function Path(props: Props) {
-  const title = useMemo(() => props.data?.match(/^# (.+)/)?.[1], [props.data])
+  const title = useMemo(
+    () =>
+      props.data?.match(/^# (.+)/)?.[1] ||
+      process.env.NEXT_PUBLIC_TITLE ||
+      'Blogit',
+    [props.data],
+  )
+  const description = useMemo(() => props.data?.substring(0, 256), [props.data])
+  const url = useMemo(
+    () =>
+      process.env.NEXT_PUBLIC_CNAME
+        ? `https://${process.env.NEXT_PUBLIC_CNAME}/${props.pathname}`
+        : undefined,
+    [props.pathname],
+  )
 
   if (!props.data) {
     return null
@@ -30,8 +44,6 @@ export default function Path(props: Props) {
   return (
     <>
       <Head>
-        <title>{title || process.env.NEXT_PUBLIC_TITLE || 'Blogit'}</title>
-        <meta name="description" content={props.data.substring(0, 256)} />
         <link
           rel="shortcut icon"
           type="image/png"
@@ -39,6 +51,20 @@ export default function Path(props: Props) {
             process.env.NEXT_PUBLIC_REPOSITORY?.split('/')[0]
           }.png?size=128`}
         />
+        <title>{title}</title>
+        <meta name="application-name" content={title} />
+        <meta name="description" content={description} />
+        <meta name="theme-color" content="#24292e" />
+        <meta property="og:url" content={url} />
+        <meta property="og:type" content="blog" />
+        <meta property="og:title" content={title} />
+        <meta property="og:site_name" content={process.env.NEXT_PUBLIC_TITLE} />
+        <meta property="og:description" content={description} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:domain" content={process.env.NEXT_PUBLIC_CNAME} />
+        <meta name="twitter:url" content={url} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
       </Head>
       <MarkdownRender
         className={css`
@@ -64,7 +90,7 @@ export default function Path(props: Props) {
           </time>
         </footer>
       ) : null}
-      {props.isIndex ? null : <Utterances />}
+      {props.pathname === process.env.NEXT_PUBLIC_INDEX ? null : <Utterances />}
     </>
   )
 }
@@ -136,7 +162,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
         'content' in content.data
           ? Buffer.from(content.data.content, 'base64').toString()
           : null,
-      isIndex: !context.params.path?.join('/'),
+      pathname: context.params.path?.join('/') || '',
     },
   }
 }
