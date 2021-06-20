@@ -1,4 +1,4 @@
-import { css } from '@linaria/core'
+import { css } from '@emotion/css'
 import { useRouter } from 'next/dist/client/router'
 import { useEffect, useRef } from 'react'
 

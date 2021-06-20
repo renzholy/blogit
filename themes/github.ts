@@ -1,4 +1,4 @@
-import { css } from '@linaria/core'
+import { css } from '@emotion/css'
 
 export const preview = css`
   h1 > a:nth-child(1),

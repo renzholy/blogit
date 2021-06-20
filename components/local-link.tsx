@@ -5,7 +5,7 @@
 import { ReactNode } from 'react'
 import { ComponentProps } from 'rehype-react'
 import Link from 'next/link'
-import { css } from '@linaria/core'
+import { css } from '@emotion/css'
 
 export default function LocalLink(
   props: ComponentProps & {

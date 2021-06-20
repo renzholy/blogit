@@ -15,6 +15,5 @@ Dockerfile
 *.xml
 LICENSE
 .next/
-.linaria-cache/
 yarn.lock
 out/

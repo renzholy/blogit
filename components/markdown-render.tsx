@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from 'react'
-import { cx } from '@linaria/core'
+import { cx } from '@emotion/css'
 import { preview } from 'themes/github'
 import { process } from 'libs/markdown'
 

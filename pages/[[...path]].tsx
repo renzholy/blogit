@@ -1,4 +1,4 @@
-import { css } from '@linaria/core'
+import { css } from '@emotion/css'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { Octokit } from 'octokit'
 import dayjs from 'dayjs'
@@ -14,6 +14,7 @@ const octokit = new Octokit({
 type Props = {
   lastModified: string | null
   data: string | null
+  isIndex: boolean
 }
 
 type Params = {
@@ -63,7 +64,7 @@ export default function Path(props: Props) {
           </time>
         </footer>
       ) : null}
-      <Utterances />
+      {props.isIndex ? null : <Utterances />}
     </>
   )
 }
@@ -135,6 +136,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (
         'content' in content.data
           ? Buffer.from(content.data.content, 'base64').toString()
           : null,
+      isIndex: !context.params.path?.join('/'),
     },
   }
 }

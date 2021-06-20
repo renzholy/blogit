@@ -1,4 +1,4 @@
-import { css, cx } from '@linaria/core'
+import { css, cx } from '@emotion/css'
 import Link from 'next/link'
 import { useMemo } from 'react'
 
@@ -46,9 +46,7 @@ export default function Navigation(props: { className?: string }) {
             {name}
           </a>
         ) : (
-          <Link
-            key={name}
-            href={href === process.env.NEXT_PUBLIC_INDEX ? '/' : href}>
+          <Link key={name} href={href}>
             {name}
           </Link>
         ),

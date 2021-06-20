@@ -1,4 +1,4 @@
-import { css } from '@linaria/core'
+import { css } from '@emotion/css'
 import { ReactNode } from 'react'
 import Footer from './footer'
 import Navigation from './navigation'

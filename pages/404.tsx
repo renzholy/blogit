@@ -1,4 +1,4 @@
-import { css } from '@linaria/core'
+import { css } from '@emotion/css'
 import useSWR from 'swr'
 
 export default function NotFound() {

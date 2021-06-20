@@ -1,4 +1,4 @@
-import { css } from '@linaria/core'
+import { css } from '@emotion/css'
 import { useMemo } from 'react'
 import Link from 'next/link'
 
@@ -17,7 +17,8 @@ export default function Footer() {
         user-select: none;
         display: flex;
         align-items: center;
-        padding: 32px 20px;
+        height: 64px;
+        padding: 0 20px;
         border-top: 1px solid #e1e4e8;
         span {
           color: #586069;
@@ -56,9 +57,7 @@ export default function Footer() {
             {name}
           </a>
         ) : (
-          <Link
-            key={name}
-            href={href === process.env.NEXT_PUBLIC_INDEX ? '/' : href}>
+          <Link key={name} href={href}>
             {name}
           </Link>
         ),
