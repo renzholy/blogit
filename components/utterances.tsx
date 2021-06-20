@@ -29,6 +29,9 @@ export default function Utterances() {
       ref={ref}
       className={css`
         user-select: none;
+        border-top: 1px solid #e1e4e8;
+        padding: 16px;
+        min-height: 270px;
         .utterances {
           max-width: var(--max-width);
         }

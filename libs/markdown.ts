@@ -12,11 +12,10 @@ import sanitize from 'rehype-sanitize'
 import rehype2react from 'rehype-react'
 import type { H } from 'mdast-util-to-hast'
 import type { Node } from 'unist'
-
+import MonaCode from 'components/mona-code'
+import LocalImage from 'components/local-image'
+import LocalLink from 'components/local-link'
 import { emoji } from './plugins/emoji'
-import MonaCode from '../components/mona-code'
-import LocalImage from '../components/local-image'
-import LocalLink from '../components/local-link'
 
 function handleHtml(_h: H, node: Node) {
   return (

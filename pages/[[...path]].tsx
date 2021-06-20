@@ -4,9 +4,8 @@ import { Octokit } from 'octokit'
 import dayjs from 'dayjs'
 import Head from 'next/head'
 import { useMemo } from 'react'
-
-import MarkdownRender from '../components/markdown-render'
-import Utterances from '../components/utterances'
+import MarkdownRender from 'components/markdown-render'
+import Utterances from 'components/utterances'
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
@@ -40,36 +39,31 @@ export default function Path(props: Props) {
           }.png?size=128`}
         />
       </Head>
-      <div
+      <MarkdownRender
         className={css`
           margin: 96px auto 32px;
           max-width: var(--max-width);
-          padding: 0 16px;
         `}>
-        <MarkdownRender
+        {props.data}
+      </MarkdownRender>
+      {props.lastModified ? (
+        <footer
           className={css`
-            padding: 0;
+            margin: 16px auto;
+            padding: 0 20px;
+            max-width: var(--max-width);
+            font-size: 14px;
+            color: #6a737d;
+            display: flex;
+            justify-content: flex-end;
           `}>
-          {props.data}
-        </MarkdownRender>
-        {props.lastModified ? (
-          <footer
-            className={css`
-              border-bottom: 1px solid #eaecef;
-              padding: 16px 0;
-              font-size: 14px;
-              color: #6a737d;
-              display: flex;
-              justify-content: flex-end;
-            `}>
-            last modified:&nbsp;
-            <time title={props.lastModified}>
-              {dayjs(props.lastModified).format('YYYY-MM-DD')}
-            </time>
-          </footer>
-        ) : null}
-        <Utterances />
-      </div>
+          Last modified:&nbsp;
+          <time title={props.lastModified}>
+            {dayjs(props.lastModified).format('YYYY-MM-DD')}
+          </time>
+        </footer>
+      ) : null}
+      <Utterances />
     </>
   )
 }

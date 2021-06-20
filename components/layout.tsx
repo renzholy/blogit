@@ -1,6 +1,6 @@
 import { css } from '@linaria/core'
 import { ReactNode } from 'react'
-
+import Footer from './footer'
 import Navigation from './navigation'
 
 export default function Layout(props: { children: ReactNode }) {
@@ -14,10 +14,11 @@ export default function Layout(props: { children: ReactNode }) {
           right: 0;
           height: 64px;
           background-color: #24292e;
-          padding: 0 32px;
+          padding: 0 20px;
         `}
       />
       {props.children}
+      <Footer />
     </>
   )
 }

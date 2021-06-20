@@ -2,9 +2,8 @@
 
 import React from 'react'
 import type { AppProps } from 'next/app'
+import Layout from 'components/layout'
 import 'normalize.css'
-
-import Layout from '../components/layout'
 import './global.css'
 
 function MyApp({ Component, pageProps }: AppProps) {

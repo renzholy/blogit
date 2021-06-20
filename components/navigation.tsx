@@ -1,10 +1,15 @@
 import { css, cx } from '@linaria/core'
 import Link from 'next/link'
+import { useMemo } from 'react'
 
 export default function Navigation(props: { className?: string }) {
-  const links =
-    process.env.NEXT_PUBLIC_LINKS?.split(';').map((item) => item.split(',')) ||
-    []
+  const headers = useMemo(
+    () =>
+      process.env.NEXT_PUBLIC_HEADER?.split(';').map((item) =>
+        item.split(','),
+      ) || [],
+    [],
+  )
 
   return (
     <nav
@@ -29,29 +34,25 @@ export default function Navigation(props: { className?: string }) {
           }
         `,
       )}>
-      {links
-        .filter(
-          ([, link]) => !link.startsWith('http') && !link.startsWith('//'),
-        )
-        .map(([name, href]) => (
-          <Link
-            key={name}
-            href={href === process.env.NEXT_PUBLIC_INDEX ? '/' : href}>
-            {name}
-          </Link>
-        ))}
+      <Link href="/">{process.env.NEXT_PUBLIC_TITLE}</Link>
       <div
         className={css`
           flex: 1;
         `}
       />
-      {links
-        .filter(([, link]) => link.startsWith('http') || link.startsWith('//'))
-        .map(([name, href]) => (
+      {headers.map(([name, href]) =>
+        href.startsWith('http') || href.startsWith('//') ? (
           <a key={name} href={href} target="_blank" rel="noreferrer">
             {name}
           </a>
-        ))}
+        ) : (
+          <Link
+            key={name}
+            href={href === process.env.NEXT_PUBLIC_INDEX ? '/' : href}>
+            {name}
+          </Link>
+        ),
+      )}
     </nav>
   )
 }

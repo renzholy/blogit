@@ -3,8 +3,7 @@ import { useEffect } from 'react'
 import IDLE from 'monaco-themes/themes/IDLE.json'
 import emojis from 'node-emoji'
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
-
-import { id, language, conf } from '../libs/monaco-config'
+import { id, language, conf } from 'libs/monaco-config'
 
 export function useMonacoColor() {
   const monaco = useMonaco()

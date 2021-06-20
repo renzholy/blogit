@@ -1,8 +1,7 @@
 import { ReactNode, useMemo } from 'react'
 import { cx } from '@linaria/core'
-
-import { preview } from '../themes/github'
-import { process } from '../libs/markdown'
+import { preview } from 'themes/github'
+import { process } from 'libs/markdown'
 
 export default function MarkdownRender(props: {
   className?: string

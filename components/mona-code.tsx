@@ -3,8 +3,7 @@ import useAsyncEffect from 'use-async-effect'
 import rehype2react, { ComponentProps } from 'rehype-react'
 import unified from 'unified'
 import rehype from 'rehype-parse'
-
-import { useMonacoColor } from '../hooks/use-monaco'
+import { useMonacoColor } from 'hooks/use-monaco'
 
 const map: { [key: string]: string } = {
   js: 'javascript',
