@@ -2,7 +2,8 @@
   "extends": [
     "airbnb-typescript",
     "plugin:react-hooks/recommended",
-    "prettier"
+    "prettier",
+    "next"
   ],
   "plugins": ["prettier", "react", "import"],
   "env": {
@@ -32,6 +33,7 @@
     "no-nested-ternary": "off",
     "@typescript-eslint/naming-convention": "off",
     "react/react-in-jsx-scope": "off",
-    "no-bitwise": "off"
+    "no-bitwise": "off",
+    "@next/next/no-img-element": "off"
   }
 }
