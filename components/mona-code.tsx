@@ -7,7 +7,9 @@ import { useMonacoColor } from 'hooks/use-monaco'
 
 const map: { [key: string]: string } = {
   js: 'javascript',
+  jsx: 'javascript',
   ts: 'typescript',
+  tsx: 'typescript',
   bash: 'shell',
 }
 
