@@ -79,6 +79,9 @@ export default function Path(props: Props) {
         className={css`
           margin: 96px auto 32px;
           max-width: var(--max-width);
+          min-height: calc(
+            100vh - 96px - 2 * 64px - ${props.pathname ? 304 : 0}px
+          );
         `}>
         {props.data}
       </MarkdownRender>
