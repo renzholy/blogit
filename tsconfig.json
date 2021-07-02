@@ -14,11 +14,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
+    "importsNotUsedAsValues": "error",
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
     "baseUrl": "."
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx", "next.config.js", "workers"]
+  "include": ["**/*.ts", "**/*.tsx", "next.config.js"]
 }

@@ -1,5 +1,5 @@
 import { css } from '@emotion/css'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import type { GetStaticPaths, GetStaticProps } from 'next'
 import { Octokit } from 'octokit'
 import dayjs from 'dayjs'
 import Head from 'next/head'

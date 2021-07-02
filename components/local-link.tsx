@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable react/jsx-props-no-spreading */
 
-import { ReactNode } from 'react'
-import { ComponentProps } from 'rehype-react'
+import type { ReactNode } from 'react'
+import type { ComponentProps } from 'rehype-react'
 import Link from 'next/link'
 import { css } from '@emotion/css'
 

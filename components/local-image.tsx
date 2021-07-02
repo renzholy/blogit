@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/dist/client/router'
 import { useMemo } from 'react'
-import { ComponentProps } from 'rehype-react'
+import type { ComponentProps } from 'rehype-react'
 import { resolve, dirname } from 'path'
 
 export default function LocalImage(
