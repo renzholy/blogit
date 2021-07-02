@@ -4,6 +4,7 @@ import { Octokit } from 'octokit'
 import dayjs from 'dayjs'
 import Head from 'next/head'
 import { useMemo } from 'react'
+import { truncate } from 'lodash'
 import MarkdownRender from 'components/markdown-render'
 import Utterances from 'components/utterances'
 
@@ -33,11 +34,12 @@ export default function Path(props: Props) {
     if (!props.data) {
       return undefined
     }
-    return (
+    return truncate(
       props.data.startsWith(`# ${title}\n\n`)
         ? props.data.replace(`# ${title}\n\n`, '')
-        : props.data
-    ).substring(0, 256)
+        : props.data,
+      { length: 256 },
+    )
   }, [props.data, title])
   const url = useMemo(
     () =>
@@ -45,6 +47,14 @@ export default function Path(props: Props) {
         ? `https://${process.env.NEXT_PUBLIC_CNAME}/${props.pathname || ''}`
         : undefined,
     [props.pathname],
+  )
+  const [owner] = process.env.NEXT_PUBLIC_REPOSITORY?.split('/') || []
+  const date = useMemo(
+    () =>
+      props.lastModified
+        ? dayjs(props.lastModified).format('YYYY-MM-DD')
+        : undefined,
+    [props.lastModified],
   )
 
   if (!props.data) {
@@ -56,11 +66,11 @@ export default function Path(props: Props) {
         <link
           rel="shortcut icon"
           type="image/png"
-          href={`https://github.com/${
-            process.env.NEXT_PUBLIC_REPOSITORY?.split('/')[0]
-          }.png?size=128`}
+          href={`https://github.com/${owner}.png?size=128`}
         />
         <title>{title}</title>
+        <meta name="author" content={owner} />
+        <meta name="date" content={date} />
         <meta name="application-name" content={title} />
         <meta name="description" content={description} />
         <meta name="theme-color" content="#24292e" />
@@ -97,9 +107,7 @@ export default function Path(props: Props) {
             justify-content: flex-end;
           `}>
           Last modified:&nbsp;
-          <time title={props.lastModified}>
-            {dayjs(props.lastModified).format('YYYY-MM-DD')}
-          </time>
+          <time title={props.lastModified}>{date}</time>
         </footer>
       ) : null}
       {props.pathname ? <Utterances /> : null}
