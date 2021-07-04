@@ -4,7 +4,5 @@ branding:
   icon: 'file-text'
   color: 'yellow'
 runs:
-  using: 'composite'
-  steps:
-    - run: $GITHUB_ACTION_PATH/entrypoint.sh
-      shell: bash
+  using: 'docker'
+  image: 'Dockerfile'
