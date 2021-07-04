@@ -6,3 +6,20 @@ branding:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+inputs:
+  title:
+    description: 'Title of site'
+    required: true
+  index:
+    description: 'Index file path'
+    required: false
+    default: 'README.md'
+  cname:
+    description: 'Hostname of site'
+    required: false
+  header:
+    description: 'Header links'
+    required: false
+  footer:
+    description: 'Footer links'
+    required: false

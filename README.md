@@ -1,15 +1,7 @@
 # Blogit
 
-Environments:
-
-- GITHUB_TOKEN
-- NEXT_PUBLIC_CNAME
-- NEXT_PUBLIC_TITLE
-- NEXT_PUBLIC_INDEX
-- NEXT_PUBLIC_HEADER
-- NEXT_PUBLIC_FOOTER
-
 Todos:
 
+- [ ] Dark Mode
 - [ ] RSS
 - [ ] TOC
