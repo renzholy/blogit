@@ -2,9 +2,11 @@ name: release
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   release:
@@ -25,7 +27,6 @@ jobs:
       - name: Build and Push to Registries
         uses: docker/build-push-action@v2
         with:
-          file: ./Dockerfile.self
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.sha }}

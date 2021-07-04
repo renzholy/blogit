@@ -1,5 +1,10 @@
-FROM ghcr.io/renzholy/blogit:latest
+FROM node:alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-ENV NODE_ENV=production
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT [ "/entrypoint.sh" ]
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+FROM node:alpine
+WORKDIR /app
+COPY . .
+COPY --from=deps /app/node_modules ./node_modules
