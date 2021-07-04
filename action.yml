@@ -12,8 +12,7 @@ inputs:
     required: true
   index:
     description: 'Index file path'
-    required: false
-    default: 'README.md'
+    required: true
   cname:
     description: 'Hostname of site'
     required: false
