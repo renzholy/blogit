@@ -3,16 +3,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import type { ReactNode } from 'react'
-import type { ComponentProps } from 'rehype-react'
 import Link from 'next/link'
 import { css } from '@emotion/css'
 
-export default function LocalLink(
-  props: ComponentProps & {
-    children?: ReactNode
-    href?: string
-  },
-) {
+export default function LocalLink(props: {
+  children?: ReactNode
+  href?: string
+}) {
   if (props.href?.endsWith('.mp4') || props.href?.endsWith('.mov')) {
     return (
       <video

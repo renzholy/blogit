@@ -2,15 +2,9 @@
 
 import { useRouter } from 'next/dist/client/router'
 import { useMemo } from 'react'
-import type { ComponentProps } from 'rehype-react'
 import { resolve, dirname } from 'path'
 
-export default function LocalImage(
-  props: ComponentProps & {
-    alt?: string
-    src?: string
-  },
-) {
+export default function LocalImage(props: { alt?: string; src?: string }) {
   const router = useRouter()
   const path = router.query.path as string[] | undefined
   const src = useMemo(() => {

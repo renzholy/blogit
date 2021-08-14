@@ -1,7 +1,7 @@
 import { createElement, Fragment, ReactNode, useState } from 'react'
 import useAsyncEffect from 'use-async-effect'
-import rehype2react, { ComponentProps } from 'rehype-react'
-import unified from 'unified'
+import rehype2react, { Options } from 'rehype-react'
+import { unified } from 'unified'
 import rehype from 'rehype-parse'
 import { useMonacoColor } from 'hooks/use-monaco'
 
@@ -13,12 +13,10 @@ const map: { [key: string]: string } = {
   bash: 'shell',
 }
 
-export default function MonaCode(
-  props: ComponentProps & {
-    children?: [string]
-    className?: string
-  },
-) {
+export default function MonaCode(props: {
+  children?: [string]
+  className?: string
+}) {
   const language = props.className?.replace('language-', '')
   const colorize = useMonacoColor()
   const value = props.children?.[0]?.replace(/\n$/, '') || ''
@@ -37,7 +35,7 @@ export default function MonaCode(
           components: {
             code: MonaCode,
           },
-        })
+        } as Options)
         .process(colorized)
       if (isMounted()) {
         setCode(result as ReactNode)
