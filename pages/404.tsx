@@ -17,7 +17,8 @@ export default function NotFound() {
           display: flex;
           flex-direction: column;
           align-items: center;
-        `}>
+        `}
+      >
         404
         {data ? (
           <img

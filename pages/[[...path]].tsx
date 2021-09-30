@@ -77,7 +77,8 @@ export default function Path(props: Props) {
           min-height: calc(
             100vh - 96px - 2 * 64px - 2px - ${props.pathname ? 302 : 0}px
           );
-        `}>
+        `}
+      >
         {props.data}
       </MarkdownRender>
       {props.lastModified ? (
@@ -90,7 +91,8 @@ export default function Path(props: Props) {
             color: #6a737d;
             display: flex;
             justify-content: flex-end;
-          `}>
+          `}
+        >
           Last modified:&nbsp;
           <time title={props.lastModified}>{date}</time>
         </footer>

@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/media-has-caption */
-/* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable react/jsx-props-no-spreading */
 
 import type { ReactNode } from 'react'

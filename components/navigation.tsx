@@ -33,7 +33,8 @@ export default function Navigation(props: { className?: string }) {
             color: hsla(0, 0%, 100%, 0.7);
           }
         `,
-      )}>
+      )}
+    >
       <Link href="/">{process.env.NEXT_PUBLIC_TITLE}</Link>
       <div
         className={css`
