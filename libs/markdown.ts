@@ -12,7 +12,6 @@ import rehype2react, { Options } from 'rehype-react'
 import MonaCode from 'components/mona-code'
 import LocalImage from 'components/local-image'
 import LocalLink from 'components/local-link'
-import { emoji } from './plugins/emoji'
 
 export function process(value: string): ReactNode {
   const { result } = unified()
@@ -20,7 +19,6 @@ export function process(value: string): ReactNode {
     .use(slug)
     .use(headings)
     .use(gfm)
-    .use(emoji)
     .use(remark2rehype)
     .use(sanitize, {
       ...defaultSchema,
