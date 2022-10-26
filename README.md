@@ -1,4 +1,4 @@
-# Blogit
+# BloGit
 
 [![release](https://github.com/renzholy/blogit/actions/workflows/release.yml/badge.svg)](https://github.com/renzholy/blogit/actions/workflows/release.yml)
 
